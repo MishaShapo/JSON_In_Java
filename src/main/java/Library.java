@@ -1,5 +1,4 @@
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -14,10 +13,8 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.io.File;
 import java.io.IOException;
-import java.rmi.server.ExportException;
 import java.util.Arrays;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
 @JsonSerialize (using = Library.LibrarySerializer.class)
@@ -35,9 +32,8 @@ public class Library {
             throws IOException {
             ObjectMapper mapper = new ObjectMapper();
             mapper.enable(SerializationFeature.INDENT_OUTPUT);
-            Book[] books = mapper.readValue(new File("../resources/library_input.json"), Book[].class);
+            Library lib = mapper.readValue(new File("../resources/library_input.json"), Library.class);
 
-            Library lib = new Library(books);
             mapper.writeValue(new File("../resources/library_output.json"), lib);
             System.out.println(lib);
         }
